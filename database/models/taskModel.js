@@ -1,3 +1,5 @@
+const { DataTypes } = require('sequelize');
+
 module.exports = (sequelize, type) => {
     return sequelize.define('tasks', {
         idTask:{
@@ -5,8 +7,20 @@ module.exports = (sequelize, type) => {
             primaryKey: true,
             autoIncrement: true
         },
-        description: type.STRING,
-        dateStart:type.DATETIME,
-        dateEnd: type.DATETIME
+        description:{ 
+            type: DataTypes.STRING,
+            validate: {
+                allowNull: true,
+                notEmpty: true,
+                unique: true,
+
+            }
+        },
+        dateStart:DataTypes.DATE,
+        dateEnd: DataTypes.DATE,
+        estatus: {
+            type: type.STRING,
+            default: 'A'
+        },
     })
 }

@@ -1,14 +1,12 @@
 module.exports = (sequelize, type) => {
-    return sequelize.define('users', {
-        idUsuario:{
+    return sequelize.define('rolMenu', {
+        idRolMenu:{
             type: type.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
-        name: type.STRING,
-        idRol:type.INTEGER,
-        user:type.STRING,
-        password: type.STRING,
+        idMenu: type.INTEGER,
+        idRol: type.INTEGER,
         estatus: type.STRING,
     })
 }
