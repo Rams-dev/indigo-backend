@@ -36,7 +36,6 @@ async function show(req, res) {
 async function store(req, res){
     try {
         const rolCreated =  await roles.create(req.body)
-        console.log(rolCreated);
         res.json({
             "message": "Rol create",
             data: rolCreated
@@ -51,20 +50,28 @@ async function store(req, res){
 
 
 async function update(req, res){
+    idRol = req.params.id
+    
+    model = new repositoryModel(roles, "idRol")
     try {
-        idRol = req.params.id
-        const existe =  await roles.findByPk(idRol)
-        console.log(existe);
-        
-        
-        if (existe == null){
-            throw 'No existe este registro'
-        }
-        const rolUpdated = await roles.update(req.body, {where:{idRol : idRol}})
-        console.log(rolCreated);
+        data = await model.show(id)
         res.json({
-            data: rolUpdated
+            data: data
         })
+
+        
+        // const existe =  await roles.findByPk(idRol)
+        // console.log(existe);
+        
+        
+        // if (existe == null){
+        //     throw 'No existe este registro'
+        // }
+        // const rolUpdated = await roles.update(req.body, {where:{idRol : idRol}})
+        // console.log(rolCreated);
+        // res.json({
+        //     data: rolUpdated
+        // })
 
         
     } catch (error) {

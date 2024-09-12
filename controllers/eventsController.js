@@ -1,9 +1,10 @@
-const {users} = require("../database/database")
+const {event} = require("../database/database");
 const { repositoryModel } = require("../database/models/repository");
 
 async function get(req, res){
     try {
-        data = await users.findAll()
+        model = new repositoryModel(event, "idEvent")
+        data = await model.getAll()
         res.json({
             data: data
         })
@@ -17,7 +18,7 @@ async function get(req, res){
 async function show(req, res) {
     try {
         const {id} = req.params
-        model = new repositoryModel(users, "idUsuario")
+        model = new repositoryModel(event, "idEvent")
         res.json({
             data: await model.show(id)
         })
@@ -34,7 +35,7 @@ async function show(req, res) {
 
 async function store(req, res){
     try {
-        const rolCreated =  await users.create(req.body)
+        const rolCreated =  await event.create(req.body)
         res.json({
             "message": "Rol create",
             data: rolCreated
@@ -52,7 +53,7 @@ async function update(req, res){
     id = req.params.id
     
     try {
-        model = new repositoryModel(users, "idUsuario")
+        model = new repositoryModel(event, "idEvent")
         data = await model.update(id, req.body)
         res.json({
             data: data
@@ -68,19 +69,9 @@ async function update(req, res){
 
 async function destroy(req, res) {
     const {id} = req.params
-    let model = new repositoryModel(users, "idUsuario")
+    let model = new repositoryModel(event, "idEvent")
     resp = await model.destroy(id)
     return res.status(200).json({"message": "product deleted"}) 
-}
-
-
-async function activeUser(req, res){
-    id = req.params.id
-    let data = await users.update({estatus:"A"}, {where:{idUsuario: id}})
-    res.json({
-        data: data
-    })
-
 }
 
 module.exports = {
@@ -88,6 +79,5 @@ module.exports = {
     store,
     show,
     update,
-    destroy,
-    activeUser
+    destroy
 }
