@@ -18,41 +18,28 @@ class repositoryModel{
 
     async show(id) {
         let idModel = this.id
-        return await this.model.findByPk(id)
+        let element = await this.model.findOne({where:{[idModel] : id, estatus:'A'}})
+        if (element == null){
+            throw 'No existe este registro'
+        }
+        return element
     }
+
 
     async store(dataStore){
         return await this.model.create(dataStore)            
     }
 
     async update(id, dataUpdate){
-        try {
-            const idModel = this.id
-            const exist =  await this.model.findByPk(id)
-                        
-            if (exist == null){
-                throw 'No existe este registro'
-            }
-
-            return await this.model.update(dataUpdate, {where:{idModel : id}})
-    
-            
-        } catch (error) {
-            return error
-            
-        }
+        let idModel = this.id
+        await this.show(id)                   
+        return await this.model.update(dataUpdate, {where:{[idModel] : id}})
+        
     }
 
 
     async destroy(id) {
-        const idModel = this.id
-        let singleModel = await this.model.findOne({where:{idModel: id}})
-        if (singleModel == null){
-            
-        }
-        if(singleModel){
-            return this.update(id, {estatus:'I'})
-       }
+        return this.update(id, {estatus:'I'})
     }
 }
 
