@@ -1,9 +1,10 @@
+var cors = require('cors')
 const express = require('express')
 const app = express()
-const port = 3000
+const port = 3999
 const routes = require('./routes/index')
 
-
+app.use(cors())
 app.use(express.json())
 require('./database/database.js')
 
