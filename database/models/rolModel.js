@@ -1,3 +1,5 @@
+const { DataTypes } = require("sequelize")
+
 module.exports = (sequelize, type) => {
     return sequelize.define('roles', {
         idRol:{
@@ -6,6 +8,10 @@ module.exports = (sequelize, type) => {
             autoIncrement: true
         },
         description: type.STRING,
-        estatus: type.STRING,
+        estatus:{
+            type: DataTypes.STRING,
+            defaultValue:'A'
+
+        } ,
     })
 }
