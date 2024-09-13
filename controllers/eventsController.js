@@ -51,6 +51,8 @@ async function store(req, res){
 
 async function update(req, res){
     id = req.params.id
+
+    console.log(req.body);
     
     try {
         model = new repositoryModel(event, "idEvent")
