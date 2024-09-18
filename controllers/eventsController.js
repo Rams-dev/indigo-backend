@@ -1,10 +1,23 @@
 const {event} = require("../database/database");
 const { repositoryModel } = require("../database/models/repository");
+const { Op } = require("sequelize");
 
 async function get(req, res){
     try {
-        model = new repositoryModel(event, "idEvent")
-        data = await model.getAll()
+
+        dateStart = req.query.dateStart
+        date = req.query.date
+        dateEnd = req.query.dateEnd
+        if(date){
+            data = await getWithOutDate()
+        }else if(dateStart){
+            data = await getbyRange(dateStart, dateEnd) 
+        }else{
+            model = new repositoryModel(event, "idEvent")
+            data = await model.getAll()
+        }
+
+
         res.json({
             data: data
         })
@@ -12,6 +25,30 @@ async function get(req, res){
         console.log(error);
         
     }
+}
+
+async function getWithOutDate(){
+
+    return await event.findAll({where:{estatus:'A', dateStart:null}})
+
+}
+
+
+async function getbyRange(dateStart, dateEnd){
+    return await event.findAll({where:{estatus:'A',
+                
+        [Op.or]:[{
+            dateStart:{[Op.between]: [dateStart, dateEnd]}
+
+        },
+        {
+            dateEnd:{[Op.between]: [dateStart, dateEnd]}
+
+        },
+
+    ]
+    
+}})
 }
 
 
