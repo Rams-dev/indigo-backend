@@ -8,7 +8,7 @@ module.exports = (sequelize, type) => {
             autoIncrement: true
         },
         date: {
-            type: DataTypes.DATE,
+            type: DataTypes.DATEONLY,
             allowNull: false,
             validate:{
                 notEmpty: true,

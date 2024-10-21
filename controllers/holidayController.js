@@ -5,14 +5,28 @@ const { Op } = require("sequelize");
 async function get(req, res){
     console.log("aqui andamos");
     try {
-        
+
+
+        let dateEnd = req.query.dateEnd
+        let dateStart = req.query.dateStart
+        console.log("dateStart");
+        console.log(dateStart);
+        if (dateStart) {
+            
+            data = await holiday.findAll({where:{estatus:'A',
+                
+                date:{[Op.between]: [dateStart, dateEnd]}
+                
+                }
+            })
+
+            res.json({data:data})
+            return 
+        }
 
         model = new repositoryModel(holiday, "idHoliday")
         data = await model.getAll()
         
-        console.log(data);
-        
-
         res.json({
             data: data
         })
