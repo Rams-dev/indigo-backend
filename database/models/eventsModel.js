@@ -5,6 +5,7 @@ module.exports = (sequelize, type) => {
         idEvent:{
             type: type.INTEGER,
             primaryKey: true,
+            allowNull: true,
             autoIncrement: true
         },
         title: {
@@ -22,8 +23,16 @@ module.exports = (sequelize, type) => {
                 notEmpty: true,
             }
         },
-        dateStart:DataTypes.DATE,
-        dateEnd: DataTypes.DATE,
+        dateStart: {
+            type: DataTypes.DATE,
+            allowNull: true, 
+            defaultValue: null,
+        },
+        dateEnd:{
+            type: DataTypes.DATE,
+            allowNull: true, 
+            defaultValue: null,
+        },
         estatus: {
             type: type.STRING,
             defaultValue: 'A'

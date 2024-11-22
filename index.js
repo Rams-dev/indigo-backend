@@ -3,14 +3,17 @@ const express = require('express')
 const app = express()
 const port = 3999
 const routes = require('./routes/index')
+var { expressjwt: jwt } = require("express-jwt");
+
+
 
 app.use(cors())
 app.use(express.json())
 require('./database/database.js')
-
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+  
+// app.get('/', (req, res) => {
+//   res.send('Hello World!')
+// })
 
 app.use(routes)
 

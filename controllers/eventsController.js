@@ -1,3 +1,4 @@
+const moment = require("moment");
 const {event} = require("../database/database");
 const { repositoryModel } = require("../database/models/repository");
 const { Op } = require("sequelize");
@@ -8,7 +9,10 @@ async function get(req, res){
         dateStart = req.query.dateStart
         date = req.query.date
         dateEnd = req.query.dateEnd
+        console.log(date);
+        
         if(date){
+
             data = await getWithOutDate()
         }else if(dateStart){
             data = await getbyRange(dateStart, dateEnd) 
@@ -29,7 +33,10 @@ async function get(req, res){
 
 async function getWithOutDate(){
 
-    return await event.findAll({where:{estatus:'A', dateStart:null}})
+    console.log("fecha nula");
+    
+
+    return await event.findAll({where:{estatus:'A', dateStart: {[Op.or]: { [Op.eq]:null, [Op.like]:"0000-00-00%"  }}}})
 
 }
 
@@ -72,6 +79,8 @@ async function show(req, res) {
 
 async function store(req, res){
     try {
+        console.log(req.body);
+        
         const rolCreated =  await event.create(req.body)
         res.json({
             "message": "Rol create",
