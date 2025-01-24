@@ -4,13 +4,13 @@ const eventsRoute = require('./eventsRoute')
 const usersRoute = require('./usersRoute')
 const authRoute = require('./authRoute')
 const holidayRoute = require('./holidayRoute')
-// const verifyToken = require('../jwt/verifyToken')
+const verifyToken = require('../jwt/verifyToken')
 
 router.use(authRoute.router)
-router.use( holidayRoute.router)
-router.use( rolRoute.router)
-router.use( eventsRoute.router)
-router.use( usersRoute.router)
+router.use(verifyToken, holidayRoute.router)
+router.use(verifyToken, rolRoute.router)
+router.use(verifyToken, eventsRoute.router)
+router.use(verifyToken, usersRoute.router)
 
 
 module.exports = router
